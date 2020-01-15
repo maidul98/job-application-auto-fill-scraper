@@ -15,7 +15,7 @@ def index():
 @app.route('/scrape-linkedin', methods=['GET'])
 def scrapeLinkedIn():
     if not request.json or not "url" in request.json:
-        abort(300)
+        abort(404)
 
     url  = request.json['url']
     if "jobs/view/" in url:
@@ -32,7 +32,7 @@ def scrapeLinkedIn():
                 soup.find(class_='jobs-search__results-list').find_all('li')[job_num - 1].find('a').attrs['href']
                 return scraper(singlePageURL)
     else:
-        return jsonify({}), 400
+        return jsonify({}), 404
 
 
 def scraper(url):
